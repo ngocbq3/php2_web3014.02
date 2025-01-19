@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>HOME PAGE</title>
+</head>
+
+<body>
+ <h1>HOME PAGE</h1>
+ <div>
+ Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum numquam possimus, voluptas eius quas, aperiam totam
+ fuga sunt odit exercitationem rerum architecto eos praesentium iure? Quaerat culpa minima perspiciatis
+ temporibus!
+ </div>
+</body>
+
+</html>

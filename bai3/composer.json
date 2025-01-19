@@ -1,0 +1,20 @@
+{
+  "name": "bqngoc/bai3",
+  "type": "bai3",
+  "version": "1.0.0",
+  "authors": [
+    {
+      "name": "ngocbq3",
+      "email": "ngocbq@fpt.edu.vn"
+    }
+  ],
+  "require": {
+    "phroute/phroute": "^2.2",
+    "eftec/bladeone": "^4.17"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  }
+}
