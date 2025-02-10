@@ -11,6 +11,9 @@ use Phroute\Phroute\RouteCollector;
 $router = new RouteCollector();
 
 $router->get('/', [HomeController::class, 'index']);
+$router->get('/test', [HomeController::class, 'test']);
+
+
 $router->get('/about', function () {
     return "<h1>About Page</h1>";
 });

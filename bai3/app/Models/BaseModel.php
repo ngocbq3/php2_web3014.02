@@ -29,4 +29,48 @@ class BaseModel
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_CLASS);
     }
+
+    /**
+     * method create: dùng để thêm dữ liệu
+     * @$data: dữ liệu bao gồm có key và value, trong đó key là tên cột trong bảng dữ liệu và value tương ứng
+     */
+    public static function create($data)
+    {
+        $model = new static;
+        $sql = "INSERT INTO $model->tableName(";
+        $values = " VALUES( ";
+
+        foreach ($data as $column => $val) {
+            $sql .= "`$column`, ";
+            $values .= ":$column, ";
+        }
+
+        $sql = rtrim($sql, ', ') . ") " . rtrim($values, ', ') . ")";
+        // dd($sql);
+        $stmt = $model->conn->prepare($sql);
+        $stmt->execute($data);
+
+        return $model->conn->lastInsertId();
+    }
+
+    /**
+     * phương thức update: để cập nhật dữ liệu theo id
+     * @data: dữ liệu bao gồm có key và value, trong đó key là tên cột trong bảng dữ liệu và value tương ứng
+     */
+    public static function update($data, $id)
+    {
+        $model = new static;
+        $sql = "UPDATE $model->tableName SET ";
+        foreach ($data as $column => $val) {
+            $sql .= "`$column`=:$column, ";
+        }
+
+        $sql = rtrim($sql, ", ") . " WHERE $model->primaryKey=:$model->primaryKey";
+        // dd($sql);
+        //Thêm primary vào cho data
+        $data["$model->primaryKey"] = $id;
+
+        $stmt = $model->conn->prepare($sql);
+        $stmt->execute($data);
+    }
 }
