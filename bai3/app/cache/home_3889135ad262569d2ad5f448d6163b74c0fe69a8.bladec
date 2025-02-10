@@ -1,20 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php $_shouldextend[1]=1; ?>
 
-<head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <meta http-equiv="X-UA-Compatible" content="ie=edge">
- <title>HOME PAGE</title>
-</head>
+<?php $this->startSection('title'); ?>
+ Trang chủ
+<?php $this->stopSection(); ?>
 
-<body>
- <h1>HOME PAGE</h1>
+<?php $this->startSection('content'); ?>
+ <h1>TRANG CHỦ</h1>
  <div>
  Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum numquam possimus, voluptas eius quas, aperiam totam
  fuga sunt odit exercitationem rerum architecto eos praesentium iure? Quaerat culpa minima perspiciatis
  temporibus!
  </div>
-</body>
+<?php $this->stopSection(); ?>
 
-</html>
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('layout'); } ?>
