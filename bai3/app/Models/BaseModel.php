@@ -73,4 +73,117 @@ class BaseModel
         $stmt = $model->conn->prepare($sql);
         $stmt->execute($data);
     }
+
+    /**
+     * @method delete: Phương thức xóa dữ liệu
+     * @param $id: giá trị theo khóa chính
+     */
+    public static function delete($id)
+    {
+        $model = new static;
+        $sql = "DELETE FROM $model->tableName WHERE $model->primaryKey=:$model->primaryKey";
+
+        $stmt = $model->conn->prepare($sql);
+        $stmt->execute(["$model->primaryKey" => $id]);
+    }
+
+    /**
+     * @method find: tìm kiếm dữ liệu theo id, trả về 1 bản ghi
+     * @param $id: giá trị cần tìm
+     */
+    public static function find($id)
+    {
+        $model = new static;
+        $sql = "SELECT * FROM $model->tableName WHERE $model->primaryKey=:$model->primaryKey";
+
+        $stmt = $model->conn->prepare($sql);
+
+        $stmt->execute(["$model->primaryKey" => $id]);
+
+        $result = $stmt->fetchAll(PDO::FETCH_CLASS);
+
+        return $result[0] ?? [];
+    }
+
+    /**
+     * @method where: phương thức tìm kiếm dữ liệu theo điều kiện
+     * @param $column: tên cột cầm tìm
+     * @param $operator: biểu thức
+     * @param $value: giá trị cần tìm
+     */
+    public static function where($column, $operator, $value)
+    {
+        $model = new static;
+        $model->sqlBuilder = "SELECT * FROM $model->tableName WHERE `$column` $operator '$value'";
+        return $model;
+    }
+
+    /**
+     * @method get: lấy dữ liệu
+     */
+    public function get()
+    {
+        $stmt = $this->conn->prepare($this->sqlBuilder);
+        // dd($this->sqlBuilder);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_CLASS);
+    }
+
+    /**
+     * @method first: lấy ra phần tử đầu tiên
+     * 
+     */
+    public function first()
+    {
+        $stmt = $this->conn->prepare($this->sqlBuilder);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_CLASS)[0] ?? [];
+    }
+
+    /**
+     * @method orWhere: thêm điều kiện hoặc
+     * @param $column: tên cột cầm tìm
+     * @param $operator: biểu thức
+     * @param $value: giá trị cần tìm
+     */
+    public function orWhere($column, $operator, $value)
+    {
+        $this->sqlBuilder .= " OR `$column` $operator '$value'";
+        return $this;
+    }
+
+    public function andWhere($column, $operator, $value)
+    {
+        $this->sqlBuilder .= " AND `$column` $operator '$value'";
+        return $this;
+    }
+
+    /**
+     * @method select: phương thức chọn cột cần lấy
+     * @param $columms: mảng các tên cột cần lấy
+     */
+    public static function select($columns = ['*'])
+    {
+        $model = new static;
+        $model->sqlBuilder = "SELECT ";
+        foreach ($columns as $col) {
+            $model->sqlBuilder .= " $col, ";
+        }
+        //loại bỏ dấu ", "
+        $model->sqlBuilder = rtrim($model->sqlBuilder, ", ") . " FROM $model->tableName";
+        return $model;
+    }
+
+    /**
+     * @method join: nối bảng
+     * @param $table: tên bảng cần nối
+     * @param $parentKey: khóa chính bảng cha
+     * @param $childKey: Khóa ngoại
+     */
+
+    public function join($table, $reference, $key)
+    {
+        $this->sqlBuilder .= " JOIN $table ON $this->tableName.$reference = $table.$key";
+        return $this;
+    }
 }
