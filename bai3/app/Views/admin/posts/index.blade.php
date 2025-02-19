@@ -12,7 +12,7 @@
                     <th scope="col">Category Name</th>
                     <th scope="col">Created at</th>
                     <th scope="col">
-                        <a href="add" class="btn btn-primary">Create</a>
+                        <a href="{{ APP_URL . 'admin/posts/add' }}" class="btn btn-primary">Create</a>
                     </th>
                 </tr>
             </thead>
@@ -20,14 +20,18 @@
                 @foreach ($posts as $post)
                     <tr>
                         <th scope="row">{{ $post->id }}</th>
-                        <td>{{ $post->title }}/td>
+                        <td>{{ $post->title }}</td>
                         <td>
-                            <img src="{{ $post->image }}" width="90" alt="">
+                            <img src="{{ APP_URL . $post->image }}" width="90" alt="">
                         </td>
                         <td>{{ $post->name }}</td>
                         <td>{{ $post->created_at }}</td>
                         <td>
-                            Edit | Delete
+                            <a href="{{ APP_URL . '/admin/posts/edit/' . $post->id }}" class="btn btn-primary">Edit</a>
+                            <form action="{{ APP_URL . 'admin/posts/delete/' . $post->id }}" method="post">
+                                <button onclick="return confirm('Bạn có muốn xóa không')" type="submit"
+                                    class="btn btn-danger">Delete</button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach

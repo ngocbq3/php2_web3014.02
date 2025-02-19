@@ -18,3 +18,11 @@ function dd($data)
     echo "</pre>";
     die;
 }
+
+//Hàm di chuyển website theo đường dẫn
+function redirect($path)
+{
+    $path = APP_URL . $path;
+    header("location: $path");
+    die;
+}
