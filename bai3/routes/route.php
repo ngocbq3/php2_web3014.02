@@ -1,7 +1,6 @@
 <?php
-require_once __DIR__ . "/../env.php";
+
 require_once __DIR__ . "/../vendor/autoload.php";
-require_once __DIR__ . "/../app/helpers/handler.php";
 
 $url = $_GET['url'] ?? '';
 
@@ -20,6 +19,8 @@ try {
 
     // Print out the value returned from the dispatched function
     echo $response;
-} catch (\Phroute\Phroute\Exception\HttpException $ex) {
+} catch (\Phroute\Phroute\Exception\HttpRouteNotFoundException $ex) {
     echo "404 Not found!";
+} catch (\Phroute\Phroute\Exception\HttpException $ex) {
+    echo $ex->getMessage();
 }
