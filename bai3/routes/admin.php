@@ -2,13 +2,14 @@
 
 use App\Controllers\Admin\PostController as PostController;
 
+$router->group(['prefix' => 'admin'], function ($router) {
+    $router->get('/posts', [PostController::class, 'index']);
+    $router->get('/posts/add', [PostController::class, 'add']);
+    $router->post('/posts/add', [PostController::class, 'store']);
+    $router->post('/posts/delete/{id}', [PostController::class, 'destroy']);
 
-$router->get('/admin/posts', [PostController::class, 'index']);
-$router->get('/admin/posts/add', [PostController::class, 'add']);
-$router->post('/admin/posts/add', [PostController::class, 'store']);
-$router->post('/admin/posts/delete/{id}', [PostController::class, 'destroy']);
-
-$router->get('/admin/posts/edit/{id}', [PostController::class, 'edit']);
-$router->post('/admin/posts/edit/{id}', [PostController::class, 'update']);
+    $router->get('/posts/edit/{id}', [PostController::class, 'edit']);
+    $router->post('/posts/edit/{id}', [PostController::class, 'update']);
+});
 
 // dd($url);
