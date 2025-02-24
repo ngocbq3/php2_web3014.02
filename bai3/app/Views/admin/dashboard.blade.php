@@ -13,6 +13,10 @@
     <div class="container">
         <header>
             Menu
+            @isset($_SESSION['user'])
+                <strong>{{ $_SESSION['user']->username }}</strong>
+                <a href="{{ APP_URL . 'logout' }}">Logout</a>
+            @endisset
         </header>
 
         @yield('content')

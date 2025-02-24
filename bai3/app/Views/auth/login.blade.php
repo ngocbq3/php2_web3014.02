@@ -12,6 +12,11 @@
 <body>
     <div class="container w-50">
         <h1>Login</h1>
+        @isset($error)
+            <div class="alert alert-danger">
+                {{ $error }}
+            </div>
+        @endisset
         <form action="" method="post">
             <div class="mb-3">
                 <label for="" class="form-label">Username</label>
